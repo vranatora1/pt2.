@@ -1,0 +1,36 @@
+﻿def read_route_data(file):#read route data from the function in the parenthesis file.
+    routes = open(file).readlines()#Creating a variable routes and you get it from reading the file.
+    routes_list = []#Creating a empty list from the route list.
+    for route in routes:# Creating route from routes
+        route_number, happy_ratio = route.split(',')# Splitting route number and happy ratio
+        route_dict = {'route_number': int(route_number), 'happy_ratio': float(happy_ratio)}# Creating dictionary where you have route no in int and happy ratio in float
+        for r in routes_list:# Creating r from route list
+            if r == route_dict:  
+                raise Exception # Excepting any error from route list.
+        routes_list.append(route_dict) # appending route list or add.
+    return routes_list  # returning your result which is routes list.
+
+
+def sort_route_data(routes_list): # sort route data from routes list.
+    routes_list.sort(key=lambda x: x['happy_ratio']) # sort route list  and return route list.
+    return routes_list
+
+
+if __name__ == '__main__':
+    try:
+        routes = read_route_data('routes.txt') # read route data
+        routes = sort_route_data(routes) # sort route data
+        while True:
+            num = input('How many routes can have an extra bus?')
+            if not num.isnumeric(): 
+                print('Invalid value. Please enter a non-negative number.')
+                continue
+            num = int(num) # value of num stored in interger
+            if num < 0:
+                print('Invalid value. Please enter a non-negative integer.')
+                continue
+            break # if it satisfies the above argument and execute it.
+        for i in range(num):  # creating another variable i from the range.
+            print(routes[i]['route_number'])
+    except ValueError and Exception: # Excepting any value error and other errors.
+        print('Invalid Data')
